@@ -40,7 +40,6 @@ col3.metric("إجمالي قيمة العقار التقديرية", f"{total_pr
 
 st.markdown("---")
 
-# جدول الخلاصة للعرض على الشاشة
 summary_data = {
     "البيان الهندسي / العنصر": [
         "قيمة الأرض (مساحة × سعر المتر)",
@@ -60,13 +59,11 @@ summary_data = {
 df_summary = pd.DataFrame(summary_data)
 st.table(df_summary)
 
-# دالة توليد ملف Excel احترافي متعدد الشيتات والجداول المنسقة والألوان باستخدام xlsxwriter
 def create_professional_excel():
     output = io.BytesIO()
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         workbook = writer.book
         
-        # تنسيقات الألوان الاحترافية
         header_format = workbook.add_format({
             'bold': True,
             'font_color': 'white',
@@ -149,12 +146,12 @@ def create_professional_excel():
             ws2.write(3 + r_idx, 1, r_data[1], cell_format if isinstance(r_data[1], (int, float)) else text_cell_format)
             ws2.write(3 + r_idx, 2, r_data[2], text_cell_format)
 
-        # ضبط مقاسات الأعمدة لتكون منسقة تلقائياً
-        ws1.set_column('A', 45)
-        ws1.set_column('B', 30)
-        ws2.set_column('A', 40)
-        ws2.set_column('B', 25)
-        ws2.set_column('C', 18)
+        # ضبط مقاسات الأعمدة باستخدام الأرقام لتجنب أي أخطاء نهائياً
+        ws1.set_column(0, 0, 45)
+        ws1.set_column(1, 1, 30)
+        ws2.set_column(0, 0, 40)
+        ws2.set_column(1, 1, 25)
+        ws2.set_column(2, 2, 18)
 
     output.seek(0)
     return output
